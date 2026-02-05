@@ -20,6 +20,7 @@ library(tidyverse)
 # Questions
 
 ## Part 1
+
 ```{r}
 midwest |>
   count(state, sort = TRUE)
@@ -31,6 +32,7 @@ Illinois (IL) has the most at 102, and Indiana (IN) has the second most at 92. W
 \newpage
 
 ### Question 2
+If a county can't repeat in the same state, if a county name appears in the data 5 times, it must be in every state.
 ```{r}
 midwest |>
   count(county) |>
@@ -39,8 +41,15 @@ midwest |>
 
 \newpage
 
-### Question 3
-\newpage
+### Question 3a
+```{r}
+
+```
+### Question 3b
+```{r}
+
+```
+
 
 ### Question 5
 

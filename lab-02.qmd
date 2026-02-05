@@ -1,7 +1,7 @@
 ---
 title: "Lab 2 - Data wrangling"
-author: "John Q. Student"
-date: "June 24, 1497"
+author: "Fahad Khalid"
+date: "Feb 5 2026"
 format: 
   html: default # for speed
   pdf: default # for final output
@@ -20,13 +20,22 @@ library(tidyverse)
 # Questions
 
 ## Part 1
+```{r}
+midwest |>
+  count(state, sort = TRUE)
+```
 
 ### Question 1
-
+Illinois (IL) has the most at 102, and Indiana (IN) has the second most at 92. Wisconsin (WI) has the fewest at 72.
 
 \newpage
 
 ### Question 2
+```{r}
+midwest |>
+  count(county) |>
+  filter(n == 5)
+```
 
 \newpage
 

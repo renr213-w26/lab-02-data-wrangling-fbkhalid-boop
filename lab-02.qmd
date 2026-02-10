@@ -54,9 +54,28 @@ midwest |>
   filter(popdensity == max(popdensity)) |>
   select(county, state, popdensity, poptotal, area)
 ```
-
+\newpage
+### Question 4
+```{r}
+midwest |>
+  summarize(
+    typical = median(popdensity),
+    lower = quantile(popdensity, 0.25),
+    upper = quantile(popdensity, 0.75)
+  )
+```
+The distribution of population density of counties is unimodal and extremely right-skewed (which is why we used median for typical population density). A typical Midwestern county has population density of 1156 people per unit area. The middle 50% of the counties have population densities between 622 to 2330 people per unit area.
+\newpage
 
 ### Question 5
+```{r}
+midwest |>
+  mutate(metro = if_else(inmetro == 1, "Yes", "No")) |>
+  count(state, metro) |>
+  group_by(state) |>
+  mutate(prop = n / sum(n)) |>
+  filter(metro == "Yes")
+```
 
 \newpage
 

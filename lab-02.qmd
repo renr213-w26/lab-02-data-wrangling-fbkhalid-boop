@@ -124,7 +124,22 @@ ggplot(midwest, aes(x = percollege, y = percbelowpoverty, color = potential_outl
 \newpage
 
 ### Question 7
+```{r}
+state_population <- midwest |>
+  group_by(state) |>
+  summarize(total_pop = sum(poptotal)) |>
+  arrange(desc(total_pop))
 
+
+```
+
+
+```{r}
+#B) add proportion
+state_population |>
+  mutate(prop = total_pop / sum(total_pop))
+```
+IL (Illinois) is the most populous state, containing approximately 27.2% of the Midwest population. WI (Wisconsin) is the least populous, containing approximately 11.6% of the population.
 \newpage
 
 ### Question 8

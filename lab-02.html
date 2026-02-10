@@ -332,7 +332,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="question-7" class="level3">
 <h3 class="anchored" data-anchor-id="question-7">Question 7</h3>
-<div style="page-break-after: always;"></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>state_population <span class="ot">&lt;-</span> midwest <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_pop =</span> <span class="fu">sum</span>(poptotal)) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_pop))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#B) add proportion</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>state_population <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> total_pop <span class="sc">/</span> <span class="fu">sum</span>(total_pop))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  state total_pop  prop
+  &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt;
+1 IL     11430602 0.272
+2 OH     10847115 0.258
+3 MI      9295297 0.221
+4 IN      5544159 0.132
+5 WI      4891769 0.116</code></pre>
+</div>
+</div>
+<p>IL (Illinois) is the most populous state, containing approximately 27.2% of the Midwest population. WI (Wisconsin) is the least populous, containing approximately 11.6% of the population. </p>
 </section>
 <section id="question-8" class="level3">
 <h3 class="anchored" data-anchor-id="question-8">Question 8</h3>

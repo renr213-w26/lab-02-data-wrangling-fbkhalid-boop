@@ -1,7 +1,7 @@
 ---
 title: "Lab 2 - Data wrangling"
 author: "Fahad Khalid"
-date: "Feb 5 2026"
+date: "Feb 12 2026"
 format: 
   html: default # for speed
   pdf: default # for final output
@@ -143,11 +143,90 @@ IL (Illinois) is the most populous state, containing approximately 27.2% of the 
 \newpage
 
 ### Question 8
+```{r}
+state_poverty <- midwest |>
+  group_by(state) |>
+  summarize(mean_percbelowpoverty = mean(percbelowpoverty))
 
+state_poverty
+```
+
+```{r}
+state_poverty |>
+  arrange(mean_percbelowpoverty)
+```
+Indiana has the lowest average percentage below poverty (10.3%), while Minnesota has the highest average percentage below poverty (14.2%).
 \newpage
-
 ## Part 2
 
 
 ### Question 9
 
+```{r}
+df <- tibble(
+  var_1 = c(10, 20, 30, 40, 50),
+  var_2 = c("Pizza", "Burger", "Pizza", "Pizza", "Burger"),
+  var_3 = c("Apple", "Apple", "Pear", "Pear", "Banana")
+)
+
+df
+```
+a.
+```{r}
+df |>
+  arrange(var_2)
+```
+
+
+This code rearranges the rows of the dataframe alphabetically based on the values in var_2. arrange() just shuffles the order of the rows for visual purposes but doesn't actually perform any calculations or logical grouping.
+
+b.
+```{r}
+df |>
+  group_by(var_2)
+```
+
+
+This code tags the data into groups based on var_2 (Pizza and Burger). Visually, the output looks exactly the same as the original dataframe. However, in the background R now recognizes the data as being split into groups. This is different from arrange() because arrange() changes the physical order of rows, but group_by() changes how future functions (like summarize) will treat the data without moving the rows.
+
+c.
+```{r}
+df |>
+  group_by(var_2) |>
+  summarize(mean_var_1 = mean(var_1))
+```
+
+This pipeline groups the data by var_2 and then collapses it using summarize. It calculates the mean of var_1 for "Pizza" and the mean of var_1 for "Burger". The result is a smaller dataframe with only 2 rows (one for each group) and their averages.
+
+d.
+```{r}
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1))
+```
+
+This groups the data by two variables (var_2 and var_3) and calculates the mean. The message says "summarise() has grouped output by 'var_2'". This means that summarize usually takes one layer of grouping at a time. After calculating the results, the dataframe is no longer grouped by var_3, but it is still grouped by var_2.
+
+e.
+```{r}
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1), .groups = "drop")
+```
+
+This pipeline performs the summary calculation but includes the argument .groups = "drop". This argument explicitly tells R to remove all grouping tags after the summary is finished. The output is a ungrouped dataframe, unlike the output in part (d) was still grouped by var_2.
+
+f.
+```{r}
+df |>
+  group_by(var_2, var_3) |>
+  summarize(mean_var_1 = mean(var_1), .groups = "drop")
+
+df |>
+  group_by(var_2, var_3) |>
+  mutate(mean_var_1 = mean(var_1))
+```
+
+The outputs are different in structure (aka dimensions).
+The first pipeline (summarize) collapses the data. It returns a smaller dataframe which only has the unique combinations of groups (like Pizza/Apple, Burger/Banana) and the calculated mean.
+The second pipeline (mutate) keeps the original dataframe size (5 rows). Instead of collapsing the data, it adds a new column called mean_var_1 and repeats the group's average for every single row belonging to that group.
